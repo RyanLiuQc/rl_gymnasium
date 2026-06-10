@@ -23,3 +23,6 @@ class TaxiAgent:
         self.epsilon_decay = epsilon_decay
         self.final_epsilon = final_epsilon
         self.discount_factor = discount_factor
+
+        # track progress. for graphing
+        self.training_error = []
