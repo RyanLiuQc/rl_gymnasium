@@ -13,12 +13,13 @@ class TaxiAgent:
         '''
         Q-learning agent
         '''
-        self.env = env,
+        self.env = env
+
+        # a dictionay is a bit better for finding q_values because it does not required precise shape of matrices
+        self.q_values = defaultdict(lambda: np.zeros(env.action_space.n)) # type: ignore
         
-
-env = gym.make("Taxi-v4", render_mode="human")
-observation, info = env.reset()
-observation, reward, terminated, truncated, info = env.step(4)
-env.render()
-
-print(observation,info)
+        self.lr = lr
+        self.init_epsilon = init_epsilon
+        self.epsilon_decay = epsilon_decay
+        self.final_epsilon = final_epsilon
+        self.discount_factor = discount_factor
