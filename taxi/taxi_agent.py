@@ -1,5 +1,24 @@
 import gymnasium as gym
 
+# note on observation:
+# observation = ((taxi_row * 5 + taxi_col) * 5 + passenger_location) * 4 + destination
+'''
+intuition:
+5x5 grid -> total 25 position for taxi. 
+since there is 5 passenger_location possible, shift taxi position by x5 so that 
+(taxi_row * 5 + taxi_col) // 5 == position value
+(taxi_row * 5 + taxi_col)%5 == passenger_location
+
+DECODING: Using modular arithmetics, role back 
+taxiPosition_and_passengerLocaation = obs // 4
+-> destination = obs % 4
+similarly, taxiPosition = taxiPosition_and_passengerLocaation // 5
+-> passenger_location = taxiPosition_and_passengerLocaation % 5
+...
+-> taxi_row = taxiPosition // 5
+-> taxi_col = taxiPosition % 5
+'''
+
 class TaxiAgent:
     def __init__(
             self, 
@@ -26,3 +45,14 @@ class TaxiAgent:
 
         # track progress. for graphing
         self.training_error = []
+
+    def get_action(self, obs: tuple[]):
+        '''
+        DECODING of observation: Using modular arithmetics, role back 
+        taxiPosition_and_passengerLocaation = obs // 4
+        -> destination = obs % 4
+        similarly, taxiPosition = taxiPosition_and_passengerLocaation // 5
+        -> passenger_location = taxiPosition_and_passengerLocaation % 5
+        -> taxi_row = taxiPosition // 5
+        -> taxi_col = taxiPosition % 5
+        '''
