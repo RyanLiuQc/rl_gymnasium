@@ -46,7 +46,7 @@ class TaxiAgent:
         # track progress. for graphing
         self.training_error = []
 
-    def get_action(self, obs: tuple[]):
+    def get_action(self, obs: int):
         '''
         DECODING of observation: Using modular arithmetics, role back 
         taxiPosition_and_passengerLocaation = obs // 4
@@ -55,6 +55,16 @@ class TaxiAgent:
         -> passenger_location = taxiPosition_and_passengerLocaation % 5
         -> taxi_row = taxiPosition // 5
         -> taxi_col = taxiPosition % 5
+
+        Choose an action using epsilon-greedy strategy.
+
+        Returns:
+            action: 0 (stand) or 1 (hit)
         '''
-        # TODO: complete signature and write the function.
-        pass 
+        # observation = ((taxi_row * 5 + taxi_col) * 5 + passenger_location) * 4 + destination
+        destination = obs % 4
+        passenger_location = (obs//4) % 5
+        taxi_col = ((obs//4) // 5) % 5
+        taxi_row = ((obs//4) // 5) // 5
+        
+
